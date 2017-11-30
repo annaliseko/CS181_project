@@ -94,17 +94,18 @@ def get_all_tweets(screen_name):
     #transform the tweepy tweets into a 2D array that will populate the csv 
     outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
     
-    retweetTemp = []
-    retweetTemp = api.retweets(tweet.id_str)
+    # retweetTemp = []
+    # retweetTemp = api.retweets(tweet.id_str)
 
-    retweets = []
-    retweets = [[retweet.id_str, retweet.text.encode("utf-8")] for retweet in retweetTemp]
+    # retweets = []
+    # retweets = [[retweet.id_str, retweet.text.encode("utf-8")] for retweet in retweetTemp]
 
+    
     #write the csv  
     with open('%s_tweets.csv' % screen_name, 'wb') as f:
         writer = csv.writer(f)
-        writer.writerow(["id", "text"])
-        writer.writerows(retweets)
+        writer.writerow(["id","created_at","text"])
+        writer.writerows(outtweets)
     
     pass
 
