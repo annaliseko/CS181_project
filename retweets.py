@@ -32,11 +32,11 @@ tweet_id = data.id
 # stores all the retweet ids and original tweet to a new csv file
 with open('retweets.csv', 'wb') as f:
     writer = csv.writer(f)
-    writer.writerow(["user", "user location", "time zone", "geo enabled", "coordinates", "text"])
+    writer.writerow(["user", "location", "timezone", "loc", "text"])
 
     # need to potentially calculate coordinates of tweet???
     for x in range(len(tweet_id)):
         retweetTemp = api.retweets(id = tweet_id[x], count = 100)
-        retweets = [[retweet.user.id_str, retweet.user.location.encode("utf-8"), retweet.user.time_zone, retweet.user.geo_enabled, retweet.coordinates, retweet.text.encode("utf-8")] for retweet in retweetTemp]
+        retweets = [[retweet.user.id_str, retweet.user.location.encode("utf-8"), retweet.user.time_zone, '', retweet.text.encode("utf-8")] for retweet in retweetTemp]
         writer.writerows(retweets)
 pass
