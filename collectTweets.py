@@ -1,9 +1,6 @@
 import sys
 import time
 
-import pyspark
-import pyspark.streaming
-
 import tweepy
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -60,7 +57,7 @@ def get_all_tweets(screen_name):
     outtweets = [[tweet.text.encode("utf-8")] for tweet in alltweets]
     
     #write the csv  
-    with open('politicians/%s.csv' % screen_name, 'wb') as f:
+    with open('politicians/%s.csv' % screen_name, 'w') as f:
         writer = csv.writer(f)
         writer.writerows(outtweets)
     

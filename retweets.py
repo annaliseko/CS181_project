@@ -1,9 +1,6 @@
 import sys
 import time
 
-import pyspark
-import pyspark.streaming
-
 import tweepy
 from tweepy import OAuthHandler
 from tweepy import Stream
