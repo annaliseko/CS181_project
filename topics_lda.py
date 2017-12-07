@@ -4,9 +4,8 @@ from pyspark.mllib.linalg import Vector, Vectors
 from pyspark.mllib.clustering import LDA, LDAModel
 import re
 
-num_of_stop_words = 70      # Number of most common words to remove, trying to eliminate stop words
-num_topics = 20             # Number of topics we are looking for
-num_words_per_topic = 10    # Number of words to display for each topic
+num_topics = 10             # Number of topics we are looking for
+num_words_per_topic = 15     # Number of words to display for each topic
 max_iterations = 50         # Max number of times to iterate before finishing
 
 # download data from http://kdd.ics.uci.edu/databases/20newsgroups/20newsgroups.html
@@ -23,7 +22,7 @@ sc = SparkContext('local', 'TestJSON')
 # 5. Only keep the words that are all alphabetical characters
 # 6. Only keep words larger than 3 characters
 
-data = sc.wholeTextFiles('politicians/files/*').map(lambda x: x[1])
+data = sc.wholeTextFiles('politicians/files/clean/*').map(lambda x: x[1])
 
 tokens = data              \
     .map( lambda document: document.strip().lower())              \
@@ -50,12 +49,11 @@ termCounts = tokens                             \
 
 
 # Identify a threshold to remove the top words, in an effort to remove stop words
-threshold_value = termCounts.take(num_of_stop_words)[num_of_stop_words - 1][0]
+# threshold_value = termCounts.take(num_of_stop_words)[num_of_stop_words - 1][0]
 
 
 # Only keep words with a count less than the threshold identified above, and then index each one and collect them into a map
 vocabulary = termCounts                         \
-    .filter(lambda x : x[0] < threshold_value)  \
     .map(lambda x: x[1])                        \
     .zipWithIndex()                             \
     .collectAsMap()
