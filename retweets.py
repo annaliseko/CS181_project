@@ -23,11 +23,11 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 # stores all the tweet ids from the csv file into an array, tweet_id
-data = pd.read_csv('mike_pence_tweets.csv')
+data = pd.read_csv('csv/tweets/SenJohnMcCain_tweets.csv')
 tweet_id = data.id
 
 # stores all the retweet ids and original tweet to a new csv file
-with open('mike_pence_retweets.csv', 'wb') as f:
+with open('csv/retweets/SenJohnMcCain_retweets.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerow(["user", "location", "timezone", "loc", "text"])
 

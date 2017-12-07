@@ -61,7 +61,7 @@ def get_all_tweets(screen_name):
     outtweets = [[tweet.id_str, tweet.text.encode("utf-8")] for tweet in alltweets]
     
     #write the csv  
-    with open('%s_tweets.csv' % screen_name, 'w') as f:
+    with open('csv/tweets/%s_tweets.csv' % screen_name, 'w') as f:
         writer = csv.writer(f)
         writer.writerow(["id","text"])
         writer.writerows(outtweets)
@@ -75,10 +75,9 @@ if __name__ == '__main__':
     get_all_tweets("BernieSanders")
     get_all_tweets("realDonaldTrump")
     get_all_tweets("SenWarren")
-    get_all_tweets("BetsyDeVosED")
     get_all_tweets("HillaryClinton")
     get_all_tweets("JoeBiden")
     get_all_tweets("MittRomney")
     get_all_tweets("PRyan")
     get_all_tweets("mike_pence")
-
+    get_all_tweets("SenJohnMcCain")
