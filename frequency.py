@@ -112,14 +112,14 @@ def tf(filename, topwords):
 # trump = 34238
 # warren = 31975
 
-
-tf('politicians/files/clean/biden.txt', 1000)
-tf('politicians/files/clean/clinton.txt', 1000)
-tf('politicians/files/clean/mccain.txt', 1000)
-tf('politicians/files/clean/obama.txt', 1000)
-tf('politicians/files/clean/pence.txt', 1000)
-tf('politicians/files/clean/romney.txt', 1000)
-tf('politicians/files/clean/ryan.txt', 1000)
-tf('politicians/files/clean/sanders.txt', 1000)
-tf('politicians/files/clean/trump.txt', 1000)
+# In terminal, run "python frequency.py > path/to/output/output.txt"
+#tf('politicians/files/clean/biden.txt', 1000)
+#tf('politicians/files/clean/clinton.txt', 1000)
+#tf('politicians/files/clean/mccain.txt', 1000)
+#tf('politicians/files/clean/obama.txt', 1000)
+#tf('politicians/files/clean/pence.txt', 1000)
+#tf('politicians/files/clean/romney.txt', 1000)
+#tf('politicians/files/clean/ryan.txt', 1000)
+#tf('politicians/files/clean/sanders.txt', 1000)
+#tf('politicians/files/clean/trump.txt', 1000)
 tf('politicians/files/clean/warren.txt', 1000)
