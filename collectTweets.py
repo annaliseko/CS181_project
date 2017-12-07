@@ -30,7 +30,7 @@ def get_all_tweets(screen_name):
     alltweets = []  
     
     #make initial request for most recent tweets (200 is the maximum allowed count)
-    new_tweets = api.user_timeline(screen_name = screen_name,count=200)
+    new_tweets = api.user_timeline(screen_name = screen_name,count=20)
     
     #save most recent tweets
     alltweets.extend(new_tweets)
@@ -39,26 +39,31 @@ def get_all_tweets(screen_name):
     oldest = alltweets[-1].id - 1
     
     #keep grabbing tweets until there are no tweets left to grab
-    while len(new_tweets) > 0:
-        print "getting tweets before %s" % (oldest)
+    # while len(alltweets) < 201 :
+    #     print "%s" % (alltweets[-1].id)
         
-        #all subsiquent requests use the max_id param to prevent duplicates
-        new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
+    #     print "getting tweets before %s" % (oldest)
         
-        #save most recent tweets
-        alltweets.extend(new_tweets)
+    #     #all subsiquent requests use the max_id param to prevent duplicates
+    #     new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
+    #     if new_tweets==[]:
+    #         break
+    #     #save most recent tweets
+    #     alltweets.extend(new_tweets)
         
-        #update the id of the oldest tweet less one
-        oldest = alltweets[-1].id - 1
+    #     #update the id of the oldest tweet less one
+    #     oldest = alltweets[-1].id - 1
         
-        print "...%s tweets downloaded so far" % (len(alltweets))
+    #     print "...%s tweets downloaded so far" % (len(alltweets))
+        
     
     #transform the tweepy tweets into a 2D array that will populate the csv 
-    outtweets = [[tweet.text.encode("utf-8")] for tweet in alltweets]
+    outtweets = [[tweet.id_str, tweet.text.encode("utf-8")] for tweet in alltweets]
     
     #write the csv  
-    with open('politicians/%s.csv' % screen_name, 'w') as f:
+    with open('%s_tweets.csv' % screen_name, 'w') as f:
         writer = csv.writer(f)
+        writer.writerow(["id","text"])
         writer.writerows(outtweets)
     
     pass
@@ -71,4 +76,9 @@ if __name__ == '__main__':
     get_all_tweets("realDonaldTrump")
     get_all_tweets("SenWarren")
     get_all_tweets("BetsyDeVosED")
+    get_all_tweets("HillaryClinton")
+    get_all_tweets("JoeBiden")
+    get_all_tweets("MittRomney")
+    get_all_tweets("PRyan")
+    get_all_tweets("mike_pence")
 
