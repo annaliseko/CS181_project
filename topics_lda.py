@@ -4,7 +4,7 @@ from pyspark.mllib.linalg import Vector, Vectors
 from pyspark.mllib.clustering import LDA, LDAModel
 import re
 
-num_topics = 10             # Number of topics we are looking for
+num_topics = 5             # Number of topics we are looking for
 num_words_per_topic = 10     # Number of words to display for each topic
 max_iterations = 50         # Max number of times to iterate before finishing
 
@@ -20,7 +20,7 @@ sc = SparkContext('local', 'TestJSON')
 # 4. Split each document into words, separated by whitespace, semi-colons, commas, and octothorpes
 # 6. Only keep words larger than 5 characters
 
-data = sc.wholeTextFiles('politicians/files/clean/all/*').map(lambda x: x[1])
+data = sc.wholeTextFiles('politicians/files/clean/all/all/*').map(lambda x: x[1])
 
 tokens = data              \
     .map( lambda document: re.split("[\s;,#]", document))         \
@@ -69,7 +69,7 @@ documents = tokens.zipWithIndex().map(document_vector).map(list)
 inv_voc = {value: key for (key, value) in vocabulary.items()}
 
 # Open an output file
-with open("all_10.txt", 'w') as f:
+with open("final_outputs/all/all_all.txt", 'w') as f:
     lda_model = LDA.train(documents, k=num_topics, maxIterations=max_iterations)
 
     topic_indices = lda_model.describeTopics(maxTermsPerTopic=num_words_per_topic)

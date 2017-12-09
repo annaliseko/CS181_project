@@ -1,5 +1,6 @@
 import nltk
 from nltk.corpus import stopwords
+from nltk.util import ngrams
 from collections import Counter
 import re
 
@@ -74,8 +75,7 @@ def openFile(filename):
  
 def removePunct(str):
     # Replace one or more non-word (non-alphanumeric) chars with a space
-    exception = "#@"
-    str = re.sub(r'[^\w'+exception+']', ' ', str)
+    str = re.sub(r'\W+', ' ', str)
     str = str.lower()
     return str
  
@@ -88,29 +88,26 @@ def wordBin(words):
 def tf(filename, topwords):
     txt = openFile(filename)
     txt = removePunct(txt)
+    # split text into words so that we can remove stop words
     words = txt.split(' ')
 
     # remove stopwords
     resultwords  = [word for word in words if word.lower() not in stopwords]
+    space = ' '
+    # rejoin words to calculate n grams
+    words = space.join(resultwords)
 
-    bins = wordBin(resultwords)
-    total = (len(resultwords))
+    # using nltk to calculate n grams of words
+    bigrams = ngrams(nltk.word_tokenize(words), 2)
+    trigrams = ngrams(nltk.word_tokenize(words), 3)
+
+    #separate words in n grams with _ so that LDA calculates them together as a phrase
+    #replace bigrams below with trigrams if you want to calculate that
+    phrase = [ '_'.join(grams) for grams in trigrams]
+    bins = wordBin(phrase)
+    total = (len(phrase))
     for key, value in bins.most_common(topwords):
-        # get only the words who have appeared at least 10 times
-        if value > 9:
-            print key
-
-# total words count
-# biden = 13641
-# clinton = 30443
-# mccain = 34672
-# obama = 29582
-# pence = 34565
-# romney = 15209
-# ryan = 18100
-# sanders = 34622
-# trump = 34238
-# warren = 31975
+        print key
 
 ## In terminal, run "python frequency.py > path/to/output/output.txt"
 ## Uncomment code below one at a time to save output of respective politician
